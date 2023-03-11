@@ -18,6 +18,12 @@ export default defineConfig({
     https: false,
     proxy: {
       '/api': 'http://localhost:1235/',
+      '/trans':{
+        target:'http://api.fanyi.baidu.com/api/trans/vip/translate',
+        ws:true,
+        changeOrigin:true,
+        rewrite:(path)=>path.replace(/^\/trans/,'')
+      }
     },
   },
 })

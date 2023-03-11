@@ -1,7 +1,7 @@
 #docker image rm -f chatapp
 #docker rm -f chatApp_backend
-#docker build -t chatapp -f Dockerfile .
-#docker run -p 9090:9090 --name chatApp_backend --network chatnet -v /home/rosy/chatAppFile:/app/chatAppFile chatapp
+#docker build -t learnbackend -f Dockerfile .
+#docker run -p 1235:1235 --name LEB --network chatnet --restart=always -d learnbackend
 FROM golang:alpine AS build
 
 ENV GO111MODULE=on

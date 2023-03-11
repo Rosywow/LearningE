@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 
@@ -33,15 +34,12 @@ func StoreWord(w http.ResponseWriter, r *http.Request) {
 	word := WordData["word"]
 	fmt.Println("接收到的单词是：",word)
 
-
 	s := `select from "LE_word" where word = $1`
 	err = Connection.QueryRow(context.Background(), s, word).Scan()
-	fmt.Println("select:", err)
 	// 单词不存在
 	if err == pgx.ErrNoRows {
-		fmt.Println("insert word")
-		s = `insert into "LE_word"(word) values($1)`
-		_, err = Connection.Exec(context.Background(), s, word)
+		s = `insert into "LE_word"(word, create_time) values($1, $2)`
+		_, err = Connection.Exec(context.Background(), s, word, time.Now())
 		if err != nil {
 			fmt.Println("insert word err:", err)
 		}
